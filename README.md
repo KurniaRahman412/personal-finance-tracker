@@ -1,14 +1,16 @@
 # Personal Finance Tracker - React JS
 
-A simple and functional finance management application built with **React** and **Tailwind CSS**. 
+Aplikasi pengelola keuangan sederhana dan fungsional yang dibangun dengan **React** dan **Tailwind CSS**.
 
-## Features
-- **CRUD Operations:** Add and view financial transactions.
-- **Auto Calculation:** Real-time calculation of total balance, income, and expenses using `reduce()`.
-- **Data Persistence:** Uses `LocalStorage` to keep your data even after page refreshes.
-- **Modern UI:** Clean dashboard design with Tailwind CSS and Indonesian currency formatting.
+## Fitur
+- **Operasi CRUD:** Menambahkan dan melihat transaksi keuangan.
+- **Perhitungan Otomatis:** Perhitungan saldo total, pemasukan, dan pengeluaran secara real-time menggunakan `reduce()`.
+- **Penyimpanan Data:** Menggunakan `LocalStorage` agar data tetap tersimpan meskipun halaman di-refresh.
+- **Tampilan Modern:** Desain dashboard yang bersih dengan Tailwind CSS dan format mata uang Rupiah.
 
-## Tech Stack
+## Teknologi
 - **React (Vite)**
 - **Tailwind CSS**
 - **JavaScript (ES6+)**
+
+![Screenshot](src/assets/preview.png)
