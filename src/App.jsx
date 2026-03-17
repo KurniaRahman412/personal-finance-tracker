@@ -30,7 +30,7 @@ useEffect(()=>{
   // Fungsi Tambah Transaksi
   const addTransaction = (e)=>{
     e.preventDefault()
-    const data = {...newTransaction, id: crypto.randomUUID(), date: Date.now()}
+    const data = {...newTransaction, id: Date.now() + Math.random() , date: Date.now()}
     setTransaction([...transaction, data])
     setNewTransaction({
       title: "",
@@ -48,7 +48,7 @@ useEffect(()=>{
 return(
     <div className="min-h-screen bg-gray-300 py-10 shadow-xl">
       <div className="max-w-2xl mx-auto">
-        <section className="grid grid-cols-3 text-center bg-white p-6 rounded-xl">
+        <section className="grid grid-cols-1 md:grid-cols-3 text-center bg-white p-6 rounded-xl space-y-2">
           <div className="text-blue-500">
             <h2 className="text-md font-bold">Saldo</h2>
             {(totals.income > totals.expense) ? (
@@ -68,7 +68,7 @@ return(
           </div>
         </section>
 
-        <section className="bg-white rounded-lg py-2 px-6 my-4 shadow-xl">
+        <section className="bg-white rounded-lg py-2 px-4 md:px-0 my-4 shadow-xl">
           <form onSubmit={addTransaction} className="my-5">
             <h3 className="text-xl font-bold text-center">Transaksi Baru</h3>
             <div className="flex flex-col max-w-md mx-auto gap-2">
@@ -102,9 +102,9 @@ return(
           </form>
         </section>
 
-        <section className="bg-white rounded-lg max-w-2xl mx-auto p-8 shadow-xl">
+        <section className="bg-white rounded-lg max-w-2xl mx-auto p-8 shadow-xl space-y-2">
           <h2 className="text-xl text-center font-bold">Riwayat Transaksi</h2>
-          <div>
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">Pemasukan</h3>
             <ul className=" mx-8">
               {income.map((item)=> (
@@ -118,7 +118,7 @@ return(
               ))}
             </ul>
           </div>
-          <div>
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">Pengeluaran</h3>
             <ul className="mx-8">
               {expense.map((item)=> (
