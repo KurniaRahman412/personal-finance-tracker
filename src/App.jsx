@@ -1,4 +1,25 @@
 import { useEffect, useState } from "react"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+
+// Chart
+const MyChart = ({ dataChart }) => (
+  <div className="bg-white p-6 rounded-xl shadow-xl my-4">
+    <h3 className="text-center font-bold mb-4">Grafik Keuangan</h3>
+    <div style={{ width: '100%', height: 300 }}>
+      <ResponsiveContainer>
+        <BarChart data={dataChart}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip formatter={(value) => `Rp. ${value.toLocaleString('id-ID')}`} />
+          <Legend />
+          {/* dataKey harus "value" sesuai dengan object di dataChart */}
+          <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+);
 
 function App(){
   const [transaction, setTransaction] = useState(()=>{
@@ -36,13 +57,34 @@ useEffect(()=>{
       category: ""
     })
   }
+  // Fungsi Hapus Transaksi
+  const deleteTransaction = (id)=>{
+    const filtered = transaction.filter((t)=> t.id !== id)
+    setTransaction(filtered)
+  }
+
+// Chart
+const dataChart = [
+  {name: 'pemasukan', value: totals.income},
+  {name: 'pengeluaran', value: totals.expense}
+]
 return(
     <div className="min-h-screen bg-gray-300 py-10 shadow-xl">
       <div className="max-w-2xl mx-auto">
+        <section className="min-h-screen bg-gray-300 py-10 shadow-xl">
+          <div className="max-w-2xl mx-auto">
+            <MyChart dataChart={dataChart} />
+          </div>
+        </section>
         <section className="grid grid-cols-3 text-center bg-white p-6 rounded-xl">
           <div className="text-blue-500">
             <h2 className="text-md font-bold">Saldo</h2>
-            <p className="text-2xl font-bold">Rp. {(totals.income - totals.expense).toLocaleString('id-ID')}</p>
+            {(totals.income > totals.expense) ? (
+              <p className="text-2xl font-bold">Rp. {(totals.income - totals.expense).toLocaleString('id-ID')}</p>
+            ) : (
+              <p className="text-2xl font-bold text-red-500">Rp. {(totals.income - totals.expense).toLocaleString('id-ID')}</p>
+            )}
+            
           </div>
           <div className="text-green-600">
             <h2 className="text-md font-bold">Pemasukan</h2>
@@ -94,9 +136,12 @@ return(
             <h3 className="text-xl font-bold">Pemasukan</h3>
             <ul className=" mx-8">
               {income.map((item)=> (
-                <li key={item.id} className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm mb-2 border-l-4 border-green-500">
+                <li key={item.id} className="grid sm:grid-cols-3 items-center bg-white p-3 rounded-lg shadow-sm mb-2 border-l-4 border-green-500">
                   <span>{item.title}</span>
                   <span>Rp. {item.amount.toLocaleString('id-ID')}</span>
+                  <button onClick={()=> deleteTransaction(item.id)}
+                    className=" bg-gray-200 shadow-2lx rounded-lg px-2 py-1 hover:bg-red-500 transition cursor-pointer"
+                  >🗑️</button>
                 </li>
               ))}
             </ul>
@@ -105,9 +150,12 @@ return(
             <h3 className="text-xl font-bold">Pengeluaran</h3>
             <ul className="mx-8">
               {expense.map((item)=> (
-                <li key={item.id} className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm mb-2 border-l-4 border-red-400">
+                <li key={item.id} className="grid grid-cols-3 items-center bg-white p-3 rounded-lg shadow-sm mb-2 border-l-4 border-red-400">
                   <span>{item.title}</span>
                   <span>Rp. {item.amount.toLocaleString('id-ID')}</span>
+                  <button onClick={()=> deleteTransaction(item.id)}
+                    className="bg-gray-200 shadow-2lx rounded-lg px-2 py-1 hover:bg-red-500 transition cursor-pointer"
+                  >🗑️</button>
                 </li>
               ))}
             </ul>
