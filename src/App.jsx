@@ -1,25 +1,5 @@
 import { useEffect, useState } from "react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
-// Chart
-const MyChart = ({ dataChart }) => (
-  <div className="bg-white p-6 rounded-xl shadow-xl my-4">
-    <h3 className="text-center font-bold mb-4">Grafik Keuangan</h3>
-    <div style={{ width: '100%', height: 300 }}>
-      <ResponsiveContainer>
-        <BarChart data={dataChart}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip formatter={(value) => `Rp. ${value.toLocaleString('id-ID')}`} />
-          <Legend />
-          {/* dataKey harus "value" sesuai dengan object di dataChart */}
-          <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  </div>
-);
 
 function App(){
   const [transaction, setTransaction] = useState(()=>{
@@ -46,6 +26,8 @@ useEffect(()=>{
   const income = transaction.filter((t)=> t.type === "income")
   const expense = transaction.filter((t)=> t.type === "expense")
   const [newTransaction, setNewTransaction] = useState({ title: "", amount: 0, type: "income", category: "" })
+  
+  // Fungsi Tambah Transaksi
   const addTransaction = (e)=>{
     e.preventDefault()
     const data = {...newTransaction, id: crypto.randomUUID(), date: Date.now()}
@@ -63,19 +45,9 @@ useEffect(()=>{
     setTransaction(filtered)
   }
 
-// Chart
-const dataChart = [
-  {name: 'pemasukan', value: totals.income},
-  {name: 'pengeluaran', value: totals.expense}
-]
 return(
     <div className="min-h-screen bg-gray-300 py-10 shadow-xl">
       <div className="max-w-2xl mx-auto">
-        <section className="min-h-screen bg-gray-300 py-10 shadow-xl">
-          <div className="max-w-2xl mx-auto">
-            <MyChart dataChart={dataChart} />
-          </div>
-        </section>
         <section className="grid grid-cols-3 text-center bg-white p-6 rounded-xl">
           <div className="text-blue-500">
             <h2 className="text-md font-bold">Saldo</h2>
